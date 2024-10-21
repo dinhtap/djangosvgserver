@@ -1,0 +1,12 @@
+<a href='/accounts/'>Manage account</a>
+<a href="/">Return to images list</a>
+{% if images_list %}
+    <h2>Your images, {{user.username}}</h2>
+    <ul>
+    {% for image in images_list %}
+        <li><a href="{{ image.name }}/">{{ image.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>You do not have any image.</p>
+{% endif %}

@@ -1,0 +1,12 @@
+<a href='/accounts/'>Manage account</a>
+<a href="/myimages/">My images</a>
+{% if images_list %}
+    <h2>All images</h2>
+    <ul>
+    {% for image in images_list %}
+        <li><a href="/images/{{ image.name }}/">{{ image.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No images are available.</p>
+{% endif %}

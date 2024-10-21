@@ -1,0 +1,53 @@
+<a href='/accounts/'>Manage account</a>
+<a href="/myimages/">My images</a>
+<a href="/">Return to all images list</a>
+{% if gooduser %}
+    <h1>{{ image.name }}</h1>
+    <svg width={{image.width}} height={{image.height}} viewBox="0 0 {{image.width}} {{image.height}}" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        {% for rectangle in rectangles %}
+            <rect x="{{rectangle.x}}" y="{{rectangle.y}}" width="{{rectangle.width}}" height="{{rectangle.height}}" fill="{{rectangle.color}}"></rect>
+        {% endfor %}
+    </svg>
+    <h2>Specs</h2>
+    <h3>Size</h3>
+    <p>{{ image.width }} x {{ image.height }}</p>
+    <h3>Rectangles</h3>
+    <table style="width:100%">
+        <tr>
+            <th>x</th>
+            <th>y</th>
+            <th>width</th>
+            <th>height</th>
+            <th>color</th>
+            <th>action</th>
+        </tr>
+        {% for rectangle in rectangles %}
+        <tr>
+            <td align="center">{{ rectangle.x }}</td>
+            <td align="center">{{ rectangle.y }}</td>
+            <td align="center">{{ rectangle.width }}</td>
+            <td align="center">{{ rectangle.height }}</td>
+            <td align="center">{{ rectangle.color }}</td>
+            <td align="center"><a href="{% url 'images:delrectangle' rectangle.id %}">Delete</a></td>
+        </tr>
+        {% endfor %}
+      </table>
+
+    <h3>Add new rectangle</h3>
+    <form action="{% url 'images:addrectangle' image.name %}" method="post">
+        {% csrf_token %}
+        <label for="x">X:</label>
+        <input type="number" name="x" id="x" required>
+        <label for="y">Y:</label>
+        <input type="number" name="y" id="y" required>
+        <label for="width">Width:</label>
+        <input type="number" name="width" id="width" required>
+        <label for="height">Height:</label>
+        <input type="number" name="height" id="height" required>
+        <label for="color">Color:</label>
+        <input type="text" name="color" id="color" required>
+        <input type="submit" value="Add rectangle">
+    </form>
+{% else %}
+    <p>You are not an author of image {{image.name}}.</p>
+{% endif %}
